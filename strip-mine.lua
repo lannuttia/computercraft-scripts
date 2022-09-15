@@ -1,16 +1,48 @@
+function findFirstItemSlot(name)
+    for slot=1,16
+    do
+        local item = turtle.getItemDetail(slot)
+        if item and item.name == name then
+            return slot
+        end
+    end
+    return nil
+end
+
 function requireFuel(requiredFuel)
-    if requiredFuel > turtle.getFuelLevel() then
+    while requiredFuel > turtle.getFuelLevel()
+    do
+        local slot = nil
+        repeat
+            slot = findFirstItemSlot("minecraft:coal")
+            if not slot then
+                print("Couldn't find any coal")
+                sleep(5000)
+            end
+        until slot
+        local originalSlot = turtle.getSelectedSlot()
+        turtle.select(slot)
+        turtle.refuel()
+        turtle.select(originalSlot)
+    end
+end
+
+function requireTorches(requiredTorches)
+    local totalTorches = nil
+    repeat
+        totalTorches = 0
         for slot=1,16
         do
             local item = turtle.getItemDetail(slot)
-            if item and item.name == "minecraft:coal" then
-                local originalSlot = turtle.getSelectedSlot()
-                turtle.select(slot)
-                turtle.refuel()
-                turtle.select(originalSlot)
+            if item and item.name == "minecraft:torch" then
+                totalTorches = totalTorches + turtle.getItemCount(slot)
             end
         end
-    end
+        if requiredTorches >= totalTorches then
+            print("I might not have enough torches")
+            sleep(5000)
+        end
+    until requiredTorches >= totalTorches
 end
 
 function tunnel(length, callback)
@@ -32,6 +64,7 @@ function branch()
     local function placeTorch(position)
         if position % 11 == 0 then
             turtle.turnLeft()
+            requireTorches(1)
             for slot=1,16
             do
                 local item = turtle.getItemDetail(slot)
