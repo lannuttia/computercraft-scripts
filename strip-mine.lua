@@ -39,7 +39,7 @@ function requireTorches(requiredTorches)
             end
         end
         if requiredTorches <= totalTorches then
-            print("I might not have enough torches")
+            print("I only have " + totalTorches + " available")
             sleep(5)
         end
     until requiredTorches <= totalTorches
