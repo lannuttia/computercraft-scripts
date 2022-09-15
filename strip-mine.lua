@@ -42,16 +42,17 @@ function requireTorches(requiredTorches)
             print("I might not have enough torches")
             sleep(5)
         end
-    until requiredTorches >= totalTorches
+    until requiredTorches <= totalTorches
 end
 
 function tunnel(length, callback)
     for i=0,length
     do
+        local movedForward = false
         if turtle.detect() then
             turtle.dig()
         end
-        turtle.forward()
+        if not turtle.forward() then break end
         if turtle.detectUp() then
             turtle.digUp()
         end
@@ -65,16 +66,15 @@ function branch()
         if position % 11 == 0 then
             turtle.turnLeft()
             requireTorches(1)
-            for slot=1,16
-            do
-                local item = turtle.getItemDetail(slot)
-                if item and item.name == "minecraft:torch" then
-                    turtle.turnLeft()
-                    local originalSlot = turtle.getSelectedSlot()
-                    turtle.select(slot)
-                    turtle.placeUp()
-                    turtle.select(originalSlot)
+            local slot = findFirstItemSlot("minecraft:torch")
+            if slot  then
+                turtle.turnLeft()
+                local originalSlot = turtle.getSelectedSlot()
+                turtle.select(slot)
+                if not turtle.placeUp() then
+                    print("Couldn't place torch")
                 end
+                turtle.select(originalSlot)
             end
             turtle.turnRight()
         end
