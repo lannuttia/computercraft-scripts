@@ -41,9 +41,9 @@ function branch()
                     turtle.select(slot)
                     turtle.placeUp()
                     turtle.select(originalSlot)
-                    turtle.turnRight()
                 end
             end
+            turtle.turnRight()
         end
     end
     tunnel(desiredTunnelLength, placeTorch)
