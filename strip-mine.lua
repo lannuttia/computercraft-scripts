@@ -68,7 +68,6 @@ function branch()
             requireTorches(1)
             local slot = findFirstItemSlot("minecraft:torch")
             if slot  then
-                turtle.turnLeft()
                 local originalSlot = turtle.getSelectedSlot()
                 turtle.select(slot)
                 if not turtle.placeUp() then
