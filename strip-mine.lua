@@ -17,7 +17,7 @@ function requireFuel(requiredFuel)
             slot = findFirstItemSlot("minecraft:coal")
             if not slot then
                 print("Couldn't find any coal")
-                sleep(5000)
+                sleep(5)
             end
         until slot
         local originalSlot = turtle.getSelectedSlot()
@@ -40,7 +40,7 @@ function requireTorches(requiredTorches)
         end
         if requiredTorches >= totalTorches then
             print("I might not have enough torches")
-            sleep(5000)
+            sleep(5)
         end
     until requiredTorches >= totalTorches
 end
