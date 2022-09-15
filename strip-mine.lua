@@ -38,7 +38,7 @@ function requireTorches(requiredTorches)
                 totalTorches = totalTorches + turtle.getItemCount(slot)
             end
         end
-        if requiredTorches >= totalTorches then
+        if requiredTorches <= totalTorches then
             print("I might not have enough torches")
             sleep(5)
         end
