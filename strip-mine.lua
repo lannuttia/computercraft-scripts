@@ -48,11 +48,10 @@ end
 function tunnel(length, callback)
     for i=0,length
     do
-        local movedForward = false
         if turtle.detect() then
             turtle.dig()
         end
-        if not turtle.forward() then break end
+        turtle.forward()
         if turtle.detectUp() then
             turtle.digUp()
         end
